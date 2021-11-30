@@ -7,6 +7,7 @@ public class PlayerControl : MonoBehaviour
 {
 
     private Rigidbody rb;
+    private int count;
     private float movementX;
     private float movementY;
     public float speed = 0;
@@ -14,6 +15,7 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        count = 0;
     }
 
     void FixedUpdate()
@@ -28,6 +30,14 @@ public class PlayerControl : MonoBehaviour
         Vector2 movementVector = movementValue.Get<Vector2>();
         movementX = movementVector.x;
         movementY = movementVector.y;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Pickup")) 
+        { 
+            other.gameObject.SetActive(false);
+            count = count + 1;
+        }
     }
 }
 
