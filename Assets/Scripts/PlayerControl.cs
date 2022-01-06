@@ -8,12 +8,14 @@ public class PlayerControl : MonoBehaviour
 {
 
     private Rigidbody rb;
+    [SerializeField] private float JumpForce = 500;
     private int count;
     private float movementX;
     private float movementY;
     public float speed = 0;
     public TextMeshProUGUI countText;
     public GameObject WinTextObject;
+    private bool isOnGround;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,19 +42,27 @@ public class PlayerControl : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
-        if(count >= 13)
+        if (count >= 13)
         {
             WinTextObject.SetActive(true);
         }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Pickup")) 
-        { 
+        if (other.gameObject.CompareTag("Pickup"))
+        {
             other.gameObject.SetActive(false);
             count = count + 1;
             SetCountText();
         }
+    }
+
+    void OnJump()
+    {
+        
+        
+     rb.AddForce(new Vector3(0, JumpForce, 0));
+        
     }
 }
 
